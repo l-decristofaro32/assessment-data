@@ -8,10 +8,14 @@ Benvenuto! Questo assessment è progettato per valutare le tue competenze in:
 
 ## Scenario
 
-Lavori per la **Megaditta (ItalPetrolCemenTermoTessilFarmoMetalChimica)**, una piattaforma di ricerche di mercato. Hai ricevuto dati grezzi da tre fonti diverse che devono essere normalizzati e preparati per alimentare un agente AI che risponde a domande su:
+Lavori per la **Megaditta (ItalPetrolCemenTermoTessilFarmoMetalChimica)**, una piattaforma SaaS di ricerche di mercato che serve **più aziende clienti** (workspace). Ogni workspace rappresenta un'azienda che utilizza la piattaforma in modo indipendente.
+
+Hai ricevuto dati grezzi da tre fonti diverse che devono essere normalizzati e preparati per alimentare un agente AI che risponde a domande su:
 - Progetti di ricerca attivi
 - Interazioni con i panelisti
 - Metodologie di ricerca
+
+I dati contengono un campo `workspace_id` che identifica a quale azienda appartiene ciascun record.
 
 ## Struttura Repository
 

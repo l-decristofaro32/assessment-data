@@ -1,36 +1,36 @@
-project_id,project_name,client_name,methodology,start_date,end_date,sample_size,status,budget,country,research_topic,project_manager,notes
-PRJ-001,Megaditta Consumer Sentiment Q4,Megaditta SpA,CAWI,2024-01-15,2024-02-28,1500,Completed,15000,IT,Brand Awareness,Mario Fantozzi,Target: 18-65 adults
-prj-001,Megaditta Consumer Sentiment Q4,Megaditta S.p.A.,CAWI,15/01/2024,28/02/2024,1500,completed,€15000,Italy,Brand Awareness,Mario Fantozzi,Duplicate entry - ignore
-PRJ-001 ,Megaditta Consumer Sentiment Q4,Megaditta SpA,Online Survey,2024-01-15,2024-02-28,1500,Completed,15000.00,IT,brand awareness,M. Fantozzi,
-PRJ-002,Electric Vehicle Adoption Study,GreenTech Innovations,CATI,2024-03-01,2024-04-15,800,In Progress,22000,DE,Sustainability,Silvana Filini,Phone interviews
-PRJ-003,Smartphone Usage Patterns,TechVision Labs,Mixed Methods,01-Mar-2024,15-May-2024,2000,completed,35000,UK,Technology,Renzo Coboldi,CAWI + Focus Groups
-PRJ-004,Food Delivery Preferences,QuickBite Inc,CAWI,2024-02-10,2024-03-20,1200,Completed,18000,FR,Consumer Behavior,Pina Fantozzi,Urban areas only
-PRJ-005,Workplace Satisfaction Survey,Contabilità Industriale srl,CAWI,2024-04-01,,950,In Progress,12000,IT,HR & Employee Engagement,Rag. Filini,Expected completion June 2024
-PRJ-006,Gaming Habits Youth Study,PixelPlay Entertainment,Online Panel,2024-01-20,2024-02-25,1800,Completed,28000,US,Entertainment,Anna Mazzafera Buratti,Ages 13-24
-PRJ-007,Healthcare Digital Transformation,MediCare Solutions,CATI,05/03/2024,N/A,600,On Hold,0,IT,Healthcare,Mario Fantozzi,Budget pending approval
-PRJ-008,Luxury Fashion Brand Perception,Haute Couture Milano,Focus Group,2024-02-15,2024-03-10,45,Completed,8500,IT,Luxury & Fashion,Luciana Calboni,12 sessions conducted
-PRJ-009,Smart Home Adoption,HomeAutomation Pro,CAWI,2024-03-15,2024-05-01,1400,In Progress,19000,ES,Technology,null,
-prj-010,Streaming Services Competition,MediaWatch Analytics,Mixed Methods,March 10 2024,May 30 2024,2500,in progress,42000,UK,Media & Entertainment,,CAWI + Depth Interviews
-PRJ-011,Organic Food Consumption,BioMarket Research,CAWI,2024-01-25,2024-03-05,1100,Completed,16000,IT,Food & Beverage,Geometra Calboni,Focus on Milan area
-PRJ-012,Political Opinion Tracker,DemocracyPulse,CATI,2024-04-10,2024-04-20,3000,Completed,55000,IT,Politics & Society,P. Fantozzi,Pre-election study
-PRJ-013,Fitness App User Experience,FitLife Technologies,Online Community,15/02/2024,30/04/2024,500,In Progress,14000,US,Health & Wellness,Mariangela Fantozzi,3-month longitudinal
-PRJ-014,Banking Services Satisfaction,FinanceFirst Bank,CAWI,2024-03-01,2024-03-25,2200,Completed,31000,DE,Financial Services,Silvana Filini,Customer panel
-PRJ-015,Travel Intentions Post-Pandemic,WanderLust Travels,Mixed,2024-02-20,2024-04-10,1600,completed,24000,FR,Tourism & Travel,Renzo Coboldi,
-PRJ-016,E-Learning Platform Evaluation,EduTech Innovations,CAWI,01-04-2024,,1000,In Progress,17000,UK,Education,Anna Mazzafera,Students & Teachers
-PRJ-017,Coffee Consumption Habits,Arabica Research Co,Face to Face,2024-03-05,2024-03-20,300,Completed,9500,IT,Food & Beverage,Rag. Filini,In-store intercepts
-PRJ-018,Social Media Influence Study,DigitalTrends Lab,Online Panel,2024-01-30,2024-03-15,2800,Completed,38000,US,Digital Marketing,Mario Fantozzi,18-35 demographics
-PRJ-019,Sustainable Packaging Attitudes,EcoPackage Solutions,CAWI,2024-04-05,2024-05-20,1300,In Progress,20000,IT,Sustainability,Luciana Calboni,
-PRJ-020,Automotive Purchase Journey,DriveInsights,Mixed Methods,10/03/2024,null,1500,in progress,45000,DE,Automotive,NULL,CAWI + Dealership visits
-PRJ-021,Pet Owner Behavior Analysis,PetCare Products Inc,CAWI,2024-02-28,2024-04-05,1750,Completed,21000,UK,Pets & Animals,Pina Fantozzi,Dog & cat owners
-PRJ-022,Cybersecurity Awareness,SecureNet Consulting,CATI,2024-03-20,2024-04-30,900,In Progress,26000,US,Technology & Security,Silvana Filini,
-PRJ-023,Wine Preferences Regional,Vini Italiani DOC,Face to Face,15-02-2024,20-03-2024,400,Completed,11000,IT,Food & Beverage,Geom. Calboni,Tuscany & Piedmont
-PRJ-024,Mobile Payment Adoption,PayFast Technologies,CAWI,2024-03-10,2024-04-25,1900,In Progress,29000,ES,FinTech,Renzo Coboldi,
-PRJ-025,Renewable Energy Perception,GreenPower Initiative,Mixed,2024-04-01,2024-05-30,2100,In Progress,36000,DE,Energy & Environment,M. Fantozzi,Homeowners survey
-prj-002,Electric Vehicle Adoption Study,GreenTech Innovations,Telephone Survey,March 1 2024,April 15 2024,800,active,22000 EUR,Germany,sustainability,S. Filini,Duplicate - phone based
-PRJ-026,Fashion E-commerce UX,StyleOnline Retail,Online Community,2024-02-12,2024-03-28,650,Completed,13500,FR,E-commerce,Anna Mazzafera Buratti,Mobile app testing
-PRJ-027,Pharmaceutical Brand Tracking,HealthPharm Industries,CATI,01/04/2024,,1200,In Progress,33000,IT,Healthcare,Rag. Filini,Quarterly tracker
-PRJ-028,Gaming Console Preferences,NextGen Gaming,CAWI,2024-03-08,2024-04-18,2300,Completed,40000,US,Gaming & Entertainment,,Core gamers 18-40
-PRJ-029,Grocery Shopping Behavior,SuperMart Chain,Mixed Methods,2024-02-18,2024-04-08,1400,Completed,25000,UK,Retail,Luciana Calboni,In-store + online
-PRJ-030,Insurance Customer Satisfaction,SafeGuard Insurance,CAWI,15/03/2024,30/04/2024,1600,in progress,27000,DE,Financial Services,Pina Fantozzi,Auto & home insurance
-PRJ-031,Employee Wellbeing Tracker,WorkLife Balance Corp,CAWI,2024-05-10,2024-03-15,700,In Progress,-5000,IT,HR & Employee Engagement,Mario Fantozzi,Budget error - needs review
-PRJ-032,Cosmetics Brand Awareness,BeautyLab International,CATI,2024-06-01,2024-04-20,1100,Completed,23000,FR,Beauty & Personal Care,Silvana Filini,End date before start date
+project_id,project_name,client_name,methodology,start_date,end_date,sample_size,status,budget,country,research_topic,project_manager,notes,workspace_id
+PRJ-001,Megaditta Consumer Sentiment Q4,Megaditta SpA,CAWI,2024-01-15,2024-02-28,1500,Completed,15000,IT,Brand Awareness,Mario Fantozzi,Target: 18-65 adults,WS-001
+prj-001,Megaditta Consumer Sentiment Q4,Megaditta S.p.A.,CAWI,15/01/2024,28/02/2024,1500,completed,€15000,Italy,Brand Awareness,Mario Fantozzi,Duplicate entry - ignore,ws-001
+PRJ-001 ,Megaditta Consumer Sentiment Q4,Megaditta SpA,Online Survey,2024-01-15,2024-02-28,1500,Completed,15000.00,IT,brand awareness,M. Fantozzi,,WS001
+PRJ-002,Electric Vehicle Adoption Study,GreenTech Innovations,CATI,2024-03-01,2024-04-15,800,In Progress,22000,DE,Sustainability,Silvana Filini,Phone interviews,WS-002
+PRJ-003,Smartphone Usage Patterns,TechVision Labs,Mixed Methods,01-Mar-2024,15-May-2024,2000,completed,35000,UK,Technology,Renzo Coboldi,CAWI + Focus Groups,WS-002
+PRJ-004,Food Delivery Preferences,QuickBite Inc,CAWI,2024-02-10,2024-03-20,1200,Completed,18000,FR,Consumer Behavior,Pina Fantozzi,Urban areas only,WS-001
+PRJ-005,Workplace Satisfaction Survey,Contabilità Industriale srl,CAWI,2024-04-01,,950,In Progress,12000,IT,HR & Employee Engagement,Rag. Filini,Expected completion June 2024,WS-001
+PRJ-006,Gaming Habits Youth Study,PixelPlay Entertainment,Online Panel,2024-01-20,2024-02-25,1800,Completed,28000,US,Entertainment,Anna Mazzafera Buratti,Ages 13-24,WS-002
+PRJ-007,Healthcare Digital Transformation,MediCare Solutions,CATI,05/03/2024,N/A,600,On Hold,0,IT,Healthcare,Mario Fantozzi,Budget pending approval,WS-003
+PRJ-008,Luxury Fashion Brand Perception,Haute Couture Milano,Focus Group,2024-02-15,2024-03-10,45,Completed,8500,IT,Luxury & Fashion,Luciana Calboni,12 sessions conducted,WS-001
+PRJ-009,Smart Home Adoption,HomeAutomation Pro,CAWI,2024-03-15,2024-05-01,1400,In Progress,19000,ES,Technology,null,,WS-002
+prj-010,Streaming Services Competition,MediaWatch Analytics,Mixed Methods,March 10 2024,May 30 2024,2500,in progress,42000,UK,Media & Entertainment,,CAWI + Depth Interviews,ws-003
+PRJ-011,Organic Food Consumption,BioMarket Research,CAWI,2024-01-25,2024-03-05,1100,Completed,16000,IT,Food & Beverage,Geometra Calboni,Focus on Milan area,WS-001
+PRJ-012,Political Opinion Tracker,DemocracyPulse,CATI,2024-04-10,2024-04-20,3000,Completed,55000,IT,Politics & Society,P. Fantozzi,Pre-election study,WS-001
+PRJ-013,Fitness App User Experience,FitLife Technologies,Online Community,15/02/2024,30/04/2024,500,In Progress,14000,US,Health & Wellness,Mariangela Fantozzi,3-month longitudinal,WS-002
+PRJ-014,Banking Services Satisfaction,FinanceFirst Bank,CAWI,2024-03-01,2024-03-25,2200,Completed,31000,DE,Financial Services,Silvana Filini,Customer panel,WS-003
+PRJ-015,Travel Intentions Post-Pandemic,WanderLust Travels,Mixed,2024-02-20,2024-04-10,1600,completed,24000,FR,Tourism & Travel,Renzo Coboldi,,WS-003
+PRJ-016,E-Learning Platform Evaluation,EduTech Innovations,CAWI,01-04-2024,,1000,In Progress,17000,UK,Education,Anna Mazzafera,Students & Teachers,WS-002
+PRJ-017,Coffee Consumption Habits,Arabica Research Co,Face to Face,2024-03-05,2024-03-20,300,Completed,9500,IT,Food & Beverage,Rag. Filini,In-store intercepts,WS-001
+PRJ-018,Social Media Influence Study,DigitalTrends Lab,Online Panel,2024-01-30,2024-03-15,2800,Completed,38000,US,Digital Marketing,Mario Fantozzi,18-35 demographics,WS-002
+PRJ-019,Sustainable Packaging Attitudes,EcoPackage Solutions,CAWI,2024-04-05,2024-05-20,1300,In Progress,20000,IT,Sustainability,Luciana Calboni,,WS-001
+PRJ-020,Automotive Purchase Journey,DriveInsights,Mixed Methods,10/03/2024,null,1500,in progress,45000,DE,Automotive,NULL,CAWI + Dealership visits,WS-003
+PRJ-021,Pet Owner Behavior Analysis,PetCare Products Inc,CAWI,2024-02-28,2024-04-05,1750,Completed,21000,UK,Pets & Animals,Pina Fantozzi,Dog & cat owners,WS-003
+PRJ-022,Cybersecurity Awareness,SecureNet Consulting,CATI,2024-03-20,2024-04-30,900,In Progress,26000,US,Technology & Security,Silvana Filini,,WS-002
+PRJ-023,Wine Preferences Regional,Vini Italiani DOC,Face to Face,15-02-2024,20-03-2024,400,Completed,11000,IT,Food & Beverage,Geom. Calboni,Tuscany & Piedmont,WS-001
+PRJ-024,Mobile Payment Adoption,PayFast Technologies,CAWI,2024-03-10,2024-04-25,1900,In Progress,29000,ES,FinTech,Renzo Coboldi,,WS-002
+PRJ-025,Renewable Energy Perception,GreenPower Initiative,Mixed,2024-04-01,2024-05-30,2100,In Progress,36000,DE,Energy & Environment,M. Fantozzi,Homeowners survey,WS-003
+prj-002,Electric Vehicle Adoption Study,GreenTech Innovations,Telephone Survey,March 1 2024,April 15 2024,800,active,22000 EUR,Germany,sustainability,S. Filini,Duplicate - phone based,ws-002
+PRJ-026,Fashion E-commerce UX,StyleOnline Retail,Online Community,2024-02-12,2024-03-28,650,Completed,13500,FR,E-commerce,Anna Mazzafera Buratti,Mobile app testing,WS-003
+PRJ-027,Pharmaceutical Brand Tracking,HealthPharm Industries,CATI,01/04/2024,,1200,In Progress,33000,IT,Healthcare,Rag. Filini,Quarterly tracker,WS-003
+PRJ-028,Gaming Console Preferences,NextGen Gaming,CAWI,2024-03-08,2024-04-18,2300,Completed,40000,US,Gaming & Entertainment,,Core gamers 18-40,WS-002
+PRJ-029,Grocery Shopping Behavior,SuperMart Chain,Mixed Methods,2024-02-18,2024-04-08,1400,Completed,25000,UK,Retail,Luciana Calboni,In-store + online,WS-003
+PRJ-030,Insurance Customer Satisfaction,SafeGuard Insurance,CAWI,15/03/2024,30/04/2024,1600,in progress,27000,DE,Financial Services,Pina Fantozzi,Auto & home insurance,
+PRJ-031,Employee Wellbeing Tracker,WorkLife Balance Corp,CAWI,2024-05-10,2024-03-15,700,In Progress,-5000,IT,HR & Employee Engagement,Mario Fantozzi,Budget error - needs review,WS-001
+PRJ-032,Cosmetics Brand Awareness,BeautyLab International,CATI,2024-06-01,2024-04-20,1100,Completed,23000,FR,Beauty & Personal Care,Silvana Filini,End date before start date,WS-003

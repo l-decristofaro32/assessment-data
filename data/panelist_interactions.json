@@ -13,7 +13,8 @@
     "resolution_time_hours": 2.5,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 5,
-    "project_ref": "PRJ-001"
+    "project_ref": "PRJ-001",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240118-002",
@@ -29,7 +30,8 @@
     "resolution_time_hours": 0.25,
     "agent_name": "Marco Rossi",
     "satisfaction_score": 4,
-    "project_ref": "prj-001"
+    "project_ref": "prj-001",
+    "workspace_id": "ws-001"
   },
   {
     "interaction_id": "INT-20240120-003",
@@ -45,7 +47,8 @@
     "resolution_time_hours": 0.5,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 5,
-    "project_ref": "PRJ-001"
+    "project_ref": "PRJ-001",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240125-004",
@@ -61,7 +64,8 @@
     "resolution_time_hours": 4,
     "agent_name": "Giulia Verdi",
     "satisfaction_score": 3,
-    "project_ref": "PRJ-003"
+    "project_ref": "PRJ-003",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240128-005",
@@ -77,7 +81,8 @@
     "resolution_time_hours": "1",
     "agent_name": "Marco Rossi",
     "satisfaction_score": 4,
-    "project_ref": "PRJ-008"
+    "project_ref": "PRJ-008",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240201-006",
@@ -93,7 +98,8 @@
     "resolution_time_hours": 0.5,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": null,
-    "project_ref": ""
+    "project_ref": "",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240205-007",
@@ -109,7 +115,8 @@
     "resolution_time_hours": 3,
     "agent_name": "Giulia Verdi",
     "satisfaction_score": 5,
-    "project_ref": "N/A"
+    "project_ref": "N/A",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240208-008",
@@ -125,7 +132,8 @@
     "resolution_time_hours": 1.5,
     "agent_name": "Marco Rossi",
     "satisfaction_score": "4",
-    "project_ref": "PRJ-013"
+    "project_ref": "PRJ-013",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240212-009",
@@ -141,7 +149,8 @@
     "resolution_time_hours": 0.75,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 5,
-    "project_ref": null
+    "project_ref": null,
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240215-010",
@@ -157,7 +166,8 @@
     "resolution_time_hours": 2,
     "agent_name": "Giulia Verdi",
     "satisfaction_score": 2,
-    "project_ref": "PRJ-018"
+    "project_ref": "PRJ-018",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240220-011",
@@ -173,7 +183,8 @@
     "resolution_time_hours": 0.5,
     "agent_name": "Marco Rossi",
     "satisfaction_score": 4,
-    "project_ref": ""
+    "project_ref": "",
+    "workspace_id": "WS001"
   },
   {
     "interaction_id": "INT-20240225-012",
@@ -189,7 +200,8 @@
     "resolution_time_hours": 5,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 4,
-    "project_ref": "PRJ-024"
+    "project_ref": "PRJ-024",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240228-013",
@@ -205,7 +217,8 @@
     "resolution_time_hours": 1,
     "agent_name": "Giulia Verdi",
     "satisfaction_score": null,
-    "project_ref": "N/A"
+    "project_ref": "N/A",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240303-014",
@@ -221,7 +234,8 @@
     "resolution_time_hours": 2,
     "agent_name": "Marco Rossi",
     "satisfaction_score": 3,
-    "project_ref": "PRJ-006"
+    "project_ref": "PRJ-006",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240308-015",
@@ -237,7 +251,8 @@
     "resolution_time_hours": "3.5",
     "agent_name": "Giulia Verdi",
     "satisfaction_score": 3,
-    "project_ref": "PRJ-014"
+    "project_ref": "PRJ-014",
+    "workspace_id": "WS-003"
   },
   {
     "interaction_id": "INT-20240312-016",
@@ -253,7 +268,8 @@
     "resolution_time_hours": 0.25,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 5,
-    "project_ref": ""
+    "project_ref": "",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240315-017",
@@ -269,7 +285,8 @@
     "resolution_time_hours": 0.5,
     "agent_name": "Marco Rossi",
     "satisfaction_score": "5",
-    "project_ref": "PRJ-008"
+    "project_ref": "PRJ-008",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240320-018",
@@ -285,7 +302,8 @@
     "resolution_time_hours": 1.5,
     "agent_name": "Giulia Verdi",
     "satisfaction_score": 5,
-    "project_ref": null
+    "project_ref": null,
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240325-019",
@@ -301,7 +319,8 @@
     "resolution_time_hours": 1,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 4,
-    "project_ref": "PRJ-005"
+    "project_ref": "PRJ-005",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20240328-020",
@@ -317,7 +336,8 @@
     "resolution_time_hours": 0.5,
     "agent_name": "Marco Rossi",
     "satisfaction_score": 5,
-    "project_ref": "N/A"
+    "project_ref": "N/A",
+    "workspace_id": "WS-001"
   },
   {
     "interaction_id": "INT-20250815-021",
@@ -333,7 +353,8 @@
     "resolution_time_hours": null,
     "agent_name": "Laura Bianchi",
     "satisfaction_score": 8,
-    "project_ref": "PRJ-024"
+    "project_ref": "PRJ-024",
+    "workspace_id": "WS-002"
   },
   {
     "interaction_id": "INT-20240401-022",
@@ -349,6 +370,7 @@
     "resolution_time_hours": "2",
     "agent_name": "Giulia Verdi",
     "satisfaction_score": "4",
-    "project_ref": "prj-001"
+    "project_ref": "prj-001",
+    "workspace_id": "ws-001"
   }
 ]

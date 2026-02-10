@@ -143,6 +143,7 @@ expected_output/
 
 ## Bonus (Opzionale)
 
+- **Multi-tenancy**: I dati contengono un campo `workspace_id` che identifica l'azienda proprietaria. Progetta la Knowledge Base e/o l'agente in modo che le query siano isolate per workspace: un utente del workspace WS-001 non deve mai ricevere dati di WS-002. Come garantiresti l'isolamento dei dati in un contesto RAG multi-tenant?
 - Implementa un semplice retrieval test (query di esempio + risultati)
 - Aggiungi monitoring/logging alla pipeline
 - Aggiungi unit tests
