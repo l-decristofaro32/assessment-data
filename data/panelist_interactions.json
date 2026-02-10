@@ -318,5 +318,37 @@
     "agent_name": "Marco Rossi",
     "satisfaction_score": 5,
     "project_ref": "N/A"
+  },
+  {
+    "interaction_id": "INT-20250815-021",
+    "panelist_id": 11204,
+    "panelist_email": "r.coboldi.DIFFERENT@email.com",
+    "panelist_phone": "+49 30 12345678",
+    "interaction_date": "2025-08-15T10:30:00",
+    "channel": "Email",
+    "issue_type": "Complaint",
+    "issue_description": "Panelista segnala problemi con il nuovo portale, non riesce a visualizzare lo storico sondaggi",
+    "resolution": "Segnalato al team tecnico. Fix in corso.",
+    "resolved": false,
+    "resolution_time_hours": null,
+    "agent_name": "Laura Bianchi",
+    "satisfaction_score": 8,
+    "project_ref": "PRJ-024"
+  },
+  {
+    "interaction_id": "INT-20240401-022",
+    "panelist_id": "10847",
+    "panelist_email": "mario.fantozzi.ALTRO@gmail.com",
+    "panelist_phone": "+39 02 9999999",
+    "interaction_date": "April 1, 2024",
+    "channel": "PHONE",
+    "issue_type": "Technical Support",
+    "issue_description": "Panelista con stesso ID ma email e telefono diversi - possibile errore nel sistema",
+    "resolution": "Verificato: si tratta dello stesso panelista con dati di contatto aggiornati",
+    "resolved": "TRUE",
+    "resolution_time_hours": "2",
+    "agent_name": "Giulia Verdi",
+    "satisfaction_score": "4",
+    "project_ref": "prj-001"
   }
 ]
