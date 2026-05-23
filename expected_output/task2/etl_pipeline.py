@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """Pipeline ETL per l'assessment UNGUESS/Megaditta.
 
-Questo script esegue le seguenti operazioni:
-1. Carica i dataset raw da CSV e JSON.
-2. Normalizza i campi chiave (es. workspace_id, project_id) in formati canonici.
-3. Converte date in formato ISO 8601 UTC.
-4. Pulisce e normalizza campi testuali e categorici.
-5. Gestisce valori nulli e anomalie nei dati.
-6. Esporta i dataset puliti in CSV per l'analisi downstream.
+Esegue:
+1. Caricamento dataset raw.
+2. Normalizzazione campi chiave.
+3. Deduplica con strategia "record più completo vince".
+4. Pseudonimizzazione PII.
+5. Validazione leggera con Pandera, se disponibile.
+6. Export dataset puliti e report data quality.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import math
@@ -22,11 +23,19 @@ from typing import Any
 
 import pandas as pd
 
+try:
+    import pandera.pandas as pa
+    from pandera.pandas import Check, Column, DataFrameSchema
+except Exception:
+    pa = None
+    Check = Column = DataFrameSchema = None
+
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 TASK_DIR = ROOT / "expected_output" / "task2"
 OUT_DIR = TASK_DIR / "cleaned_data"
+REPORT_PATH = TASK_DIR / "data_quality_report.md"
 
 NULL_TOKENS = {"", "N/A", "NA", "NULL", "NONE", "NAN"}
 
@@ -154,6 +163,14 @@ def normalize_methodology(value: Any) -> str | None:
     return mapping.get(value.lower(), value.title())
 
 
+def hash_value(value: Any) -> str | None:
+    value = norm_null(value)
+    if not value:
+        return None
+
+    return hashlib.sha256(value.lower().encode("utf-8")).hexdigest()[:16]
+
+
 def load_raw() -> tuple[pd.DataFrame, pd.DataFrame]:
     logger.info("Loading raw datasets")
 
@@ -168,10 +185,11 @@ def load_raw() -> tuple[pd.DataFrame, pd.DataFrame]:
     return projects, interactions
 
 
-def transform_projects(df: pd.DataFrame) -> pd.DataFrame:
+def transform_projects(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
     logger.info("Normalizing project fields")
 
     df = df.copy()
+    stats = {"raw_projects": len(df)}
 
     df["workspace_id"] = df["workspace_id"].map(norm_ws)
     df["project_id"] = df["project_id"].map(norm_project_id)
@@ -187,13 +205,35 @@ def transform_projects(df: pd.DataFrame) -> pd.DataFrame:
     if "project_manager" in df.columns:
         df["project_manager"] = df["project_manager"].map(normalize_text)
 
-    return df
+    before = len(df)
+
+    df["_completeness"] = df.notna().sum(axis=1)
+
+    df = (
+        df.sort_values(
+            ["workspace_id", "project_id", "_completeness"],
+            ascending=[True, True, False],
+        )
+        .drop_duplicates(["workspace_id", "project_id"])
+        .drop(columns=["_completeness"])
+        .reset_index(drop=True)
+    )
+
+    stats["canonical_projects"] = len(df)
+    stats["project_duplicates_removed"] = before - len(df)
+
+    logger.info("Removed %s duplicate project records", stats["project_duplicates_removed"])
+
+    return df, stats
 
 
-def transform_interactions(df: pd.DataFrame) -> pd.DataFrame:
-    logger.info("Normalizing interaction fields")
+def transform_interactions(
+    df: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, int]]:
+    logger.info("Normalizing interactions and pseudonymizing PII")
 
     df = df.copy()
+    stats = {"raw_interactions": len(df)}
 
     df["workspace_id"] = df["workspace_id"].map(norm_ws)
     df["project_id"] = df["project_ref"].map(norm_project_id)
@@ -205,6 +245,7 @@ def transform_interactions(df: pd.DataFrame) -> pd.DataFrame:
     df["issue_type"] = df["issue_type"].map(normalize_enum)
 
     df["resolved"] = df["resolved"].map(bool_norm)
+
     df["resolution_time_hours"] = pd.to_numeric(
         df["resolution_time_hours"],
         errors="coerce",
@@ -219,6 +260,9 @@ def transform_interactions(df: pd.DataFrame) -> pd.DataFrame:
         df["satisfaction_score"].notna()
         & ~df["satisfaction_score"].between(1, 5)
     )
+
+    stats["invalid_satisfaction_scores"] = int(invalid_scores.sum())
+
     if invalid_scores.any():
         logger.warning(
             "Nullified %s satisfaction scores outside range 1-5",
@@ -229,21 +273,126 @@ def transform_interactions(df: pd.DataFrame) -> pd.DataFrame:
     if "agent_name" in df.columns:
         df["agent_name"] = df["agent_name"].map(normalize_text)
 
-    return df
+    df["panelist_email_hash"] = df["panelist_email"].map(hash_value)
+    df["panelist_phone_hash"] = df["panelist_phone"].map(hash_value)
+
+    df = df.drop(columns=["panelist_email", "panelist_phone"])
+
+    before = len(df)
+
+    df = df.drop_duplicates(["interaction_id"]).reset_index(drop=True)
+
+    stats["canonical_interactions"] = len(df)
+    stats["interaction_duplicates_removed"] = before - len(df)
+
+    panelists = (
+        df[
+            [
+                "workspace_id",
+                "panelist_id",
+                "panelist_email_hash",
+                "panelist_phone_hash",
+            ]
+        ]
+        .drop_duplicates(["workspace_id", "panelist_id"])
+        .reset_index(drop=True)
+    )
+
+    agents = (
+        df[["workspace_id", "agent_name"]]
+        .dropna()
+        .drop_duplicates()
+        .reset_index(drop=True)
+    )
+
+    logger.info(
+        "Removed %s duplicate interaction records",
+        stats["interaction_duplicates_removed"],
+    )
+
+    return df, panelists, agents, stats
 
 
-def run_pipeline() -> None:
+def validate_outputs(projects: pd.DataFrame, interactions: pd.DataFrame) -> list[str]:
+    """Validation leggera. Pandera è opzionale per non rendere fragile l'assessment."""
+
+    if pa is None:
+        logger.warning("Pandera not installed: skipping schema validation")
+        return []
+
+    logger.info("Running lightweight Pandera validation")
+
+    issues: list[str] = []
+
+    project_schema = DataFrameSchema(
+        {
+            "workspace_id": Column(str, Check.str_matches(r"^WS-\d{3}$")),
+            "project_id": Column(str, Check.str_matches(r"^PRJ-\d{3}$")),
+            "budget_eur": Column(float, Check.ge(0), nullable=True, coerce=True),
+        },
+        strict=False,
+    )
+
+    interaction_schema = DataFrameSchema(
+        {
+            "workspace_id": Column(str, Check.str_matches(r"^WS-\d{3}$")),
+            "interaction_id": Column(str, unique=True),
+            "satisfaction_score": Column(
+                float,
+                Check.in_range(1, 5),
+                nullable=True,
+                coerce=True,
+            ),
+        },
+        strict=False,
+    )
+
+    try:
+        project_schema.validate(projects, lazy=True)
+    except pa.errors.SchemaErrors as exc:
+        issues.append(f"projects: {len(exc.failure_cases)} validation failures")
+
+    try:
+        interaction_schema.validate(interactions, lazy=True)
+    except pa.errors.SchemaErrors as exc:
+        issues.append(f"interactions: {len(exc.failure_cases)} validation failures")
+
+    return issues
+
+def run_pipeline() -> dict[str, int]:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     projects_raw, interactions_raw = load_raw()
 
-    projects = transform_projects(projects_raw)
-    interactions = transform_interactions(interactions_raw)
+    projects, project_stats = transform_projects(projects_raw)
+
+    interactions, panelists, agents, interaction_stats = transform_interactions(
+        interactions_raw
+    )
+
+    validation_issues = validate_outputs(projects, interactions)
+
+    stats = {
+        **project_stats,
+        **interaction_stats,
+        "validation_issues": len(validation_issues),
+    }
 
     projects.to_csv(OUT_DIR / "projects.csv", index=False)
     interactions.to_csv(OUT_DIR / "interactions.csv", index=False)
+    panelists.to_csv(OUT_DIR / "panelists.csv", index=False)
+    agents.to_csv(OUT_DIR / "agents.csv", index=False)
 
-    logger.info("Field normalization completed")
+    projects[["methodology"]].dropna().drop_duplicates().rename(
+        columns={"methodology": "methodology_name"}
+    ).to_csv(
+        OUT_DIR / "methodologies.csv",
+        index=False,
+    )
+
+    logger.info("ETL completed")
+
+    return stats
 
 
 if __name__ == "__main__":
