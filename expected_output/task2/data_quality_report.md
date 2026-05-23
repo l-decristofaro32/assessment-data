@@ -10,6 +10,7 @@
 - Interaction duplicates removed: 0
 - Invalid satisfaction scores nullified: 1
 - Project validation issues: 1 record has missing `workspace_id` after normalization.
+- Invalid project date ranges found: {stats['invalid_project_date_ranges']},
 
 ## Validation
 
@@ -28,6 +29,7 @@
 - Mixed boolean representations such as `true`, `yes`, `1`, and `TRUE`.
 - Out-of-range satisfaction scores were converted to null instead of guessed.
 - One project record has missing `workspace_id`; it was retained but flagged by validation.
+- Some project records have `end_date` before `start_date`; they were retained and flagged instead of corrected without evidence.
 
 ## Decisions
 
@@ -35,6 +37,7 @@
 - Dates are normalized to UTC ISO 8601 where parsable.
 - Duplicate projects are resolved by keeping the most complete record for each `(workspace_id, project_id)`.
 - Raw PII is not included in the cleaned interaction table; deterministic hashes are kept for entity linkage.
+- Panelist direct identifiers such as email and phone are pseudonymized. Agent and project manager names are retained because they refer to internal operational users, not research participants; in production this would be reviewed against the company data classification policy.
 
 ## Production next steps
 

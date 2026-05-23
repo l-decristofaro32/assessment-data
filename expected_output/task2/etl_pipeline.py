@@ -197,6 +197,23 @@ def transform_projects(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
     df["start_date"] = df["start_date"].map(parse_date)
     df["end_date"] = df["end_date"].map(parse_date)
 
+    start_dt = pd.to_datetime(df["start_date"], errors="coerce", utc=True)
+    end_dt = pd.to_datetime(df["end_date"], errors="coerce", utc=True)
+
+    invalid_date_ranges = (
+        start_dt.notna()
+        & end_dt.notna()
+        & (end_dt < start_dt)
+    )
+
+    stats["invalid_project_date_ranges"] = int(invalid_date_ranges.sum())
+
+    if invalid_date_ranges.any():
+        logger.warning(
+            "Found %s project records with end_date before start_date",
+            stats["invalid_project_date_ranges"],
+        )
+
     df["budget_eur"] = df["budget"].map(parse_money)
 
     df["status"] = df["status"].map(normalize_enum)
