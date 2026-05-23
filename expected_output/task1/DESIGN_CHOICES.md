@@ -1,19 +1,48 @@
 # Design choices
 
-## Obiettivo
-Lo schema separa il modello di dominio operativo dal livello di recupero basato sull'intelligenza artificiale. Il compito richiede almeno la terza forma normale (3NF), ma l'obiettivo è quello di costruire una base di conoscenza interrogabile tramite modelli di linguaggio di grandi dimensioni (LLM), pertanto il modello include anche tabelle relative all'acquisizione dei dati e ai metadati dei blocchi.
+## Goal
+The schema separates the operational domain model from the AI retrieval layer. The assignment asks for at least 3NF, but the role is explicitly about building an LLM-queryable knowledge base, so the model also includes ingestion and chunk metadata tables.
 
-## Normalizzazione
-Le entità principali sono suddivise in `workspaces`, `clients`, `projects`, `methodologies`, `panelists`, `support_agents`, `interactions` e `faq_documents`. I valori ricorrenti, come i nomi delle metodologie, i clienti e i responsabili, sono modellati come entità anziché come campi di testo duplicati. Ciò consente di evitare anomalie negli aggiornamenti e supporta l'uso di vocabolari controllati.
+## Normalization
+The core entities are separated into `workspaces`, `clients`, `projects`, `methodologies`, `panelists`, `support_agents`, `interactions`, and `faq_documents`. Repeating values such as methodology names, clients and managers are modeled as entities rather than duplicated text fields. This avoids update anomalies and supports controlled vocabularies.
 
 ## Multi-tenancy
-`workspace_id` fa parte della chiave delle entità di proprietà del tenant e compare in ogni tabella di dominio interrogabile. In produzione, garantirei l'isolamento dei tenant su più livelli: autorizzazione dell'applicazione, sicurezza a livello di riga del database, filtri dei metadati del vector store e, dove necessario, chiavi di crittografia specifiche per tenant.
+`workspace_id` is part of the key for tenant-owned entities and appears on every queryable domain table. In production I would enforce tenant isolation at multiple levels: application authorization, database row-level security, vector-store metadata filters, and tenant-scoped encryption keys where required.
 
-## Layer RAG
-`document_chunks` and `embedding_metadata` sono stati volutamente esclusi dal modello operativo 3NF. Sono ottimizzati per il recupero dei dati, non per l'elaborazione delle transazioni. Ogni blocco memorizza il tipo di fonte, l'ID della fonte, l'ID dell'area di lavoro, l'hash del contenuto e i metadati, il che consente il re-embedding incrementale e la tracciabilità.
+## RAG-oriented layer
+`document_chunks` and `embedding_metadata` deliberately sit outside the 3NF operational model. They are optimized for retrieval, not transaction processing. Each chunk stores source type, source id, workspace id, content hash and metadata, which allows incremental re-embedding and auditability.
 
 ## Query optimization
-Gli indici sono pensati per rispondere alle domande più frequenti degli agenti: progetti attivi per area di lavoro/stato, interazioni per tipo di ticket/data/progetto e segmenti per area di lavoro/fonte. L'indice GIN su `metadata` supporta il recupero filtrabile se i segmenti vengono salvati in PostgreSQL prima di essere trasferiti in un database vettoriale.
+Indexes target likely agent questions: active projects by workspace/status, interactions by issue type/date/project, and chunks by workspace/source. The GIN index on `metadata` supports filterable retrieval if chunks are persisted in PostgreSQL before being pushed to a vector database.
 
-## Riflessioni sulla data quality
-Alcuni record contengono valori intenzionalmente contraddittori. L'ETL conserva il record canonico più completo in caso di duplicati e registra i problemi di qualità noti, invece di nasconderli senza avvisare. Le date di fine precedenti alle date di inizio vengono segnalate perché correggerle automaticamente non sarebbe sicuro.
+## Data quality assumptions
+Some records contain intentionally conflicting values. The ETL keeps the most complete canonical record for duplicates and records known quality issues, instead of silently hiding them. End dates before start dates are flagged because automatically correcting them would be unsafe.
+
+## Tradeoffs and Design Decisions
+
+### Why normalize the schema?
+
+The schema was normalized to reduce duplication, improve consistency and simplify downstream analytics and retrieval workflows.
+
+### Why separate projects, methodologies and interactions?
+
+These entities have different lifecycles and update patterns. Separating them improves extensibility and avoids denormalized duplication.
+
+### Why use workspace_id as tenant boundary?
+
+The platform is designed as multi-tenant. Explicit tenant boundaries simplify governance, filtering and future semantic retrieval isolation.
+
+### Why keep relational modeling even for RAG preparation?
+
+Structured relational data remains useful for:
+- governance,
+- analytics,
+- filtering,
+- lineage,
+- retrieval metadata enrichment.
+
+The relational layer complements the semantic retrieval layer rather than replacing it.
+
+### Why preserve invalid records instead of deleting them?
+
+Potentially inconsistent records were retained and flagged to preserve traceability and avoid introducing unsupported assumptions during automated cleaning.
