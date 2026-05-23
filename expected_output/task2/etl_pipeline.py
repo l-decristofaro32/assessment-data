@@ -68,11 +68,24 @@ def norm_project_id(value: Any) -> str | None:
     match = re.match(r"PRJ-?0*(\d+)$", value.upper().replace(" ", ""))
     return f"PRJ-{int(match.group(1)):03d}" if match else value.upper()
 
+def norm_phone(value: Any) -> str | None:
+    value = norm_null(value)
+    if value == "0":
+        return None
+    return value
+
+def fix_mojibake(text: str) -> str:
+    return text.replace("â‚¬", "€")
 
 def parse_date(value: Any) -> str | None:
     value = norm_null(value)
     if not value:
         return None
+
+    if re.match(r"^\d{4}-\d{2}-\d{2}", value):
+        parsed = pd.to_datetime(value, errors="coerce", utc=True)
+        if pd.notna(parsed):
+            return parsed.isoformat().replace("+00:00", "Z")
 
     for dayfirst in (True, False):
         with warnings.catch_warnings():
@@ -265,6 +278,7 @@ def transform_interactions(
     df["project_id"] = df["project_ref"].map(norm_project_id)
 
     df["panelist_id"] = df["panelist_id"].astype(str).str.strip()
+    df["panelist_phone_hash"] = df["panelist_phone"].map(norm_phone).map(hash_value)
     df["interaction_date"] = df["interaction_date"].map(parse_date)
 
     df["channel"] = df["channel"].map(normalize_enum)
@@ -300,7 +314,6 @@ def transform_interactions(
         df["agent_name"] = df["agent_name"].map(normalize_text)
 
     df["panelist_email_hash"] = df["panelist_email"].map(hash_value)
-    df["panelist_phone_hash"] = df["panelist_phone"].map(hash_value)
 
     df = df.drop(columns=["panelist_email", "panelist_phone"])
 
@@ -404,6 +417,8 @@ def write_quality_report(
         f"- Canonical interaction records: {stats['canonical_interactions']}",
         f"- Interaction duplicates removed: {stats['interaction_duplicates_removed']}",
         f"- Invalid satisfaction scores nullified: {stats['invalid_satisfaction_scores']}",
+        f"- Invalid project date ranges found: {stats['invalid_project_date_ranges']}",
+        f"- Missing project managers: {stats['missing_project_managers']}",
         "",
         "## Validation",
         "",
@@ -429,6 +444,10 @@ def write_quality_report(
             "- PII in support interactions: email and phone were pseudonymized and removed from cleaned interaction records.",
             "- Mixed boolean representations such as `true`, `yes`, `1`, and `TRUE`.",
             "- Out-of-range satisfaction scores were converted to null instead of guessed.",
+            "- One project record has missing `workspace_id`; it was retained but flagged by validation.",
+            "- Some project records have `end_date` before `start_date`; they were retained and flagged instead of corrected without evidence.",
+            "- Some project records have missing `project_manager`; they were retained as incomplete operational metadata.",
+            "- Some panelist IDs appear with multiple contact identifiers; records were retained and pseudonymized to preserve linkage.",
             "",
             "## Decisions",
             "",
@@ -441,6 +460,13 @@ def write_quality_report(
             "",
             "For production I would move these checks into CI, persist rejected records to a quarantine table, "
             "and expose data-quality metrics/alerts in CloudWatch or a similar monitoring system.",
+            "",
+            "## Validation Decisions",
+            "",
+            "- Invalid satisfaction scores were nullified instead of corrected automatically.",
+            "- Records with inconsistent date ranges were retained and flagged for traceability.",
+            "- Missing operational metadata was preserved instead of inferred.",
+            ""
         ]
     )
 

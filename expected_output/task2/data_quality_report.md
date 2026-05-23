@@ -9,9 +9,8 @@
 - Canonical interaction records: 37
 - Interaction duplicates removed: 0
 - Invalid satisfaction scores nullified: 1
-- Project validation issues: 1 record has missing `workspace_id` after normalization.
-- Invalid project date ranges found: {stats['invalid_project_date_ranges']},
-- Missing project managers: {stats['missing_project_managers']}
+- Invalid project date ranges found: 2
+- Missing project managers: 4
 
 ## Validation
 
@@ -32,6 +31,7 @@
 - One project record has missing `workspace_id`; it was retained but flagged by validation.
 - Some project records have `end_date` before `start_date`; they were retained and flagged instead of corrected without evidence.
 - Some project records have missing `project_manager`; they were retained as incomplete operational metadata.
+- Some panelist IDs appear with multiple contact identifiers; records were retained and pseudonymized to preserve linkage.
 
 ## Decisions
 
@@ -39,7 +39,6 @@
 - Dates are normalized to UTC ISO 8601 where parsable.
 - Duplicate projects are resolved by keeping the most complete record for each `(workspace_id, project_id)`.
 - Raw PII is not included in the cleaned interaction table; deterministic hashes are kept for entity linkage.
-- Panelist direct identifiers such as email and phone are pseudonymized. Agent and project manager names are retained because they refer to internal operational users, not research participants; in production this would be reviewed against the company data classification policy.
 
 ## Production next steps
 
@@ -47,6 +46,6 @@ For production I would move these checks into CI, persist rejected records to a 
 
 ## Validation Decisions
 
-- Invalid satisfaction scores were nullified instead of corrected to avoid introducing unsupported assumptions.
-- Records with inconsistent date ranges were retained and flagged rather than automatically modified.
-- Missing operational metadata was preserved to maintain traceability of incomplete upstream records.
+- Invalid satisfaction scores were nullified instead of corrected automatically.
+- Records with inconsistent date ranges were retained and flagged for traceability.
+- Missing operational metadata was preserved instead of inferred.
