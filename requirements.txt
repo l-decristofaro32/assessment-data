@@ -1,0 +1,4 @@
+openai>=2.38.0
+pandas>=3.0.3
+pandera[pandas]>=0.31.1
+pytest>=9.0.3

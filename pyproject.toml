@@ -1,0 +1,12 @@
+[project]
+name = "assessment-data"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "openai>=2.38.0",
+    "pandas>=3.0.3",
+    "pandera[pandas]>=0.31.1",
+    "pytest>=9.0.3",
+]
