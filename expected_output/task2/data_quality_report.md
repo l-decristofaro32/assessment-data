@@ -11,6 +11,7 @@
 - Invalid satisfaction scores nullified: 1
 - Project validation issues: 1 record has missing `workspace_id` after normalization.
 - Invalid project date ranges found: {stats['invalid_project_date_ranges']},
+- Missing project managers: {stats['missing_project_managers']}
 
 ## Validation
 
@@ -30,6 +31,7 @@
 - Out-of-range satisfaction scores were converted to null instead of guessed.
 - One project record has missing `workspace_id`; it was retained but flagged by validation.
 - Some project records have `end_date` before `start_date`; they were retained and flagged instead of corrected without evidence.
+- Some project records have missing `project_manager`; they were retained as incomplete operational metadata.
 
 ## Decisions
 

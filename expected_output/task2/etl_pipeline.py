@@ -222,6 +222,15 @@ def transform_projects(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
     if "project_manager" in df.columns:
         df["project_manager"] = df["project_manager"].map(normalize_text)
 
+    missing_project_manager = df["project_manager"].isna()
+    stats["missing_project_managers"] = int(missing_project_manager.sum())
+
+    if missing_project_manager.any():
+        logger.warning(
+            "Found %s project records with missing project_manager",
+            stats["missing_project_managers"],
+        )
+
     before = len(df)
 
     df["_completeness"] = df.notna().sum(axis=1)
