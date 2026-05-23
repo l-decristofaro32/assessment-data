@@ -46,6 +46,8 @@ def fake_embedding(text: str, dim: int = FALLBACK_EMBEDDING_DIM) -> list[float]:
     digest = hashlib.sha256(text.encode("utf-8")).digest()
     return [round((digest[i % len(digest)] / 255.0) * 2 - 1, 6) for i in range(dim)]
 
+def fix_mojibake(text: str) -> str:
+    return text.replace("â‚¬", "€")
 
 def get_client() -> Any | None:
     if not OPENAI_API_KEY or OpenAI is None:
@@ -210,6 +212,7 @@ def chunk_faq(client: Any | None) -> list[dict[str, Any]]:
         encoding="utf-8",
         errors="replace",
     )
+    faq_text = fix_mojibake(faq_text)
 
     records = []
 
@@ -295,9 +298,9 @@ def retrieve(
 def write_retrieval_test(records: list[dict[str, Any]], client: Any | None) -> None:
     queries = [
         {
-            "query": "CATI metodologia interviste telefoniche",
+            "query": "CAWI sondaggi online questionari",
             "workspace_id": None,
-            "source": "projects",
+            "source": "faq",
         },
         {
             "query": "Technical Support accesso link errore sondaggio",
@@ -331,7 +334,7 @@ def write_retrieval_test(records: list[dict[str, Any]], client: Any | None) -> N
             query=item["query"],
             records=records,
             client=client,
-            top_k=3,
+            top_k=2,
             workspace_id=item["workspace_id"],
             source=item["source"],
         )
