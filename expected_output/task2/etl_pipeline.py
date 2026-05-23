@@ -350,6 +350,7 @@ def validate_outputs(projects: pd.DataFrame, interactions: pd.DataFrame) -> list
     try:
         project_schema.validate(projects, lazy=True)
     except pa.errors.SchemaErrors as exc:
+        logger.warning("Project validation failures:\n%s", exc.failure_cases)
         issues.append(f"projects: {len(exc.failure_cases)} validation failures")
 
     try:
@@ -358,6 +359,66 @@ def validate_outputs(projects: pd.DataFrame, interactions: pd.DataFrame) -> list
         issues.append(f"interactions: {len(exc.failure_cases)} validation failures")
 
     return issues
+
+def write_quality_report(
+    stats: dict[str, int],
+    validation_issues: list[str],
+) -> None:
+    logger.info("Writing data quality report")
+
+    lines = [
+        "# Data Quality Report",
+        "",
+        "## Summary",
+        "",
+        f"- Raw project records: {stats['raw_projects']}",
+        f"- Canonical project records: {stats['canonical_projects']}",
+        f"- Project duplicates removed: {stats['project_duplicates_removed']}",
+        f"- Raw interaction records: {stats['raw_interactions']}",
+        f"- Canonical interaction records: {stats['canonical_interactions']}",
+        f"- Interaction duplicates removed: {stats['interaction_duplicates_removed']}",
+        f"- Invalid satisfaction scores nullified: {stats['invalid_satisfaction_scores']}",
+        "",
+        "## Validation",
+        "",
+        "- Logging: standard Python logging to console.",
+        "- Pandera: lightweight, non-blocking schema checks for key fields when installed.",
+        "- Unit tests: focused tests for normalization helpers.",
+        "",
+    ]
+
+    if validation_issues:
+        lines.extend(f"- {issue}" for issue in validation_issues)
+    else:
+        lines.append("No blocking validation issues found.")
+
+    lines.extend(
+        [
+            "",
+            "## Main issues found",
+            "",
+            "- Mixed date formats across CSV and JSON records.",
+            "- Inconsistent casing/formatting for `workspace_id`, `project_ref`, `channel`, and methodology values.",
+            "- Null-like values represented as empty strings, `N/A`, `null`, and `0`.",
+            "- PII in support interactions: email and phone were pseudonymized and removed from cleaned interaction records.",
+            "- Mixed boolean representations such as `true`, `yes`, `1`, and `TRUE`.",
+            "- Out-of-range satisfaction scores were converted to null instead of guessed.",
+            "",
+            "## Decisions",
+            "",
+            "- `workspace_id` and `project_id` are canonicalized to `WS-001` and `PRJ-001` formats.",
+            "- Dates are normalized to UTC ISO 8601 where parsable.",
+            "- Duplicate projects are resolved by keeping the most complete record for each `(workspace_id, project_id)`.",
+            "- Raw PII is not included in the cleaned interaction table; deterministic hashes are kept for entity linkage.",
+            "",
+            "## Production next steps",
+            "",
+            "For production I would move these checks into CI, persist rejected records to a quarantine table, "
+            "and expose data-quality metrics/alerts in CloudWatch or a similar monitoring system.",
+        ]
+    )
+
+    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
 
 def run_pipeline() -> dict[str, int]:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -377,6 +438,8 @@ def run_pipeline() -> dict[str, int]:
         **interaction_stats,
         "validation_issues": len(validation_issues),
     }
+
+    write_quality_report(stats, validation_issues)
 
     projects.to_csv(OUT_DIR / "projects.csv", index=False)
     interactions.to_csv(OUT_DIR / "interactions.csv", index=False)
