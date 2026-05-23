@@ -44,3 +44,9 @@
 ## Production next steps
 
 For production I would move these checks into CI, persist rejected records to a quarantine table, and expose data-quality metrics/alerts in CloudWatch or a similar monitoring system.
+
+## Validation Decisions
+
+- Invalid satisfaction scores were nullified instead of corrected to avoid introducing unsupported assumptions.
+- Records with inconsistent date ranges were retained and flagged rather than automatically modified.
+- Missing operational metadata was preserved to maintain traceability of incomplete upstream records.
