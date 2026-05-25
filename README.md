@@ -1,82 +1,90 @@
-# AI Engineer Assessment
+# UNGUESS AI & Data Engineer Assessment
 
-Benvenuto! Questo assessment è progettato per valutare le tue competenze in:
-- Normalizzazione e design di database
-- Pipeline ETL e data transformation
-- Preparazione dati per sistemi RAG/Knowledge Base
-- Integrazione con agenti AI
+## Repository structure
 
-## Scenario
-
-Lavori per la **Megaditta (ItalPetrolCemenTermoTessilFarmoMetalChimica)**, una piattaforma SaaS di ricerche di mercato che serve **più aziende clienti** (workspace). Ogni workspace rappresenta un'azienda che utilizza la piattaforma in modo indipendente.
-
-Hai ricevuto dati grezzi da tre fonti diverse che devono essere normalizzati e preparati per alimentare un agente AI che risponde a domande su:
-- Progetti di ricerca attivi
-- Interazioni con i panelisti
-- Metodologie di ricerca
-
-I dati contengono un campo `workspace_id` che identifica a quale azienda appartiene ciascun record.
-
-## Struttura Repository
-
-```
-├── data/                          # Dataset grezzi (NON MODIFICARE)
-│   ├── projects_raw.csv          # 30+ progetti di ricerca
-│   ├── panelist_interactions.json # 20+ interazioni customer support
-│   └── research_faq.txt          # FAQ metodologie di ricerca
-├── expected_output/               # Metti qui i tuoi output
-│   └── README.md                 # Struttura attesa dei deliverable
-├── ASSIGNMENT.md                  # Istruzioni dettagliate
-└── README.md                      # Questo file
+```text
+expected_output/
+├── task1/
+├── task2/
+└── task3/
 ```
 
-## Dataset
+### Task 1
+Relational schema design and normalization strategy.
 
-| File | Formato | Record | Contenuto |
-|------|---------|--------|-----------|
-| `projects_raw.csv` | CSV | ~30 righe | Progetti di ricerca con metadati (clienti, budget, metodologia, status) |
-| `panelist_interactions.json` | JSON | ~20 record | Log interazioni customer support con panelisti |
-| `research_faq.txt` | TXT | ~150 righe | FAQ su metodologie di ricerca, pricing, privacy, processi |
+Files:
+- `schema.sql`
+- `DESIGN_CHOICES.md`
 
-> **Nota**: I dati contengono inconsistenze intenzionali (formati misti, duplicati, valori mancanti, errori di tipo). Parte dell'assessment è identificarle e gestirle.
+### Task 2
+ETL pipeline for cleaning, normalization, GDPR-oriented pseudonymization and data quality validation.
 
-## Prima di Iniziare
+Files:
+- `etl_pipeline.py`
+- `data_quality_report.md`
 
-**API Key OpenAI**: Riceverai una API key dedicata via email per generare embeddings nel Task 3. Usala responsabilmente.
+### Task 3
+Knowledge base preparation for semantic retrieval and RAG workflows.
 
-**Tempo Stimato**: circa 6 ore per completare tutti i task. Puoi scegliere di documentare solo la strategia per il Task 3 se preferisci.
+Files:
+- `prepare_knowledge_base.py`
+- `knowledge_base.jsonl`
+- `retrieval_test_results.md`
+- `EMBEDDING_STRATEGY.md`
 
-## Quick Start
+---
 
-1. **Fai un fork** di questa repo
-2. Leggi attentamente [`ASSIGNMENT.md`](ASSIGNMENT.md) per i requisiti dettagliati
-3. Analizza i dati in `data/` - presta attenzione alla qualità dei dati
-4. Completa i 3 task richiesti
-5. Salva tutti i tuoi output in `expected_output/`
-6. Condividi il link al tuo fork quando hai completato
+## Setup
 
-## Criteri di Valutazione
+Install dependencies:
 
-| Task | Peso | Focus |
-|------|------|-------|
-| Database Design & Normalizzazione | 30% | Schema 3NF, relazioni tra entità, scelte progettuali |
-| Pipeline ETL | 40% | Pulizia dati, gestione inconsistenze, GDPR, data quality |
-| Knowledge Base per RAG | 30% | Embeddings, chunking strategy, metadata design |
+```bash
+uv sync
+```
 
-## Regole
+or:
 
-- **Linguaggio**: Libera scelta (Python consigliato ma non obbligatorio)
-- **Librerie**: Libera scelta
-- **Embeddings**: Usa API key OpenAI fornita o modelli open-source (sentence-transformers)
-- **Documentazione**: Spiega le tue scelte tecniche nei file `.md` richiesti
-- **Tempo**: circa 6 ore stimate - puoi completare tutti i task o fare Task 1+2 completi e Task 3 solo strategia
+```bash
+pip install -r requirements.txt
+```
 
-## Consegna
+---
 
-Crea un fork di questa repo e condividi il link quando hai completato l'assessment.
+## Run Task 2
 
-## Domande?
+```bash
+uv run expected_output/task2/etl_pipeline.py
+```
 
-Se qualcosa non è chiaro, fai assunzioni ragionevoli e documentale. Valutiamo anche la capacità di prendere decisioni autonome in contesti ambigui.
+Run tests:
 
-Buon lavoro! 🚀
+```bash
+uv run pytest
+```
+
+---
+
+## Run Task 3
+
+```bash
+uv run expected_output/task3/prepare_knowledge_base.py
+```
+
+---
+
+## Notes
+
+- OpenAI embeddings are optional and enabled through `OPENAI_API_KEY`
+- Deterministic offline fallback retrieval is included to keep the project reproducible without external services
+- PII in support interactions is pseudonymized before export
+
+## Assumptions
+
+- Raw source data is kept unchanged under `data/`.
+- Cleaned outputs are regenerated by running the ETL pipeline.
+- Inconsistent records are retained and flagged when there is not enough evidence to safely correct them.
+
+## Task 3 embedding note
+
+The script supports OpenAI embeddings via `OPENAI_API_KEY`.  
+If the key is not available, it uses deterministic fallback embeddings plus lexical fallback retrieval so the project remains reproducible offline.
