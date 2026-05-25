@@ -122,6 +122,22 @@ The fallback mode is intended only to validate the end-to-end retrieval flow and
 
 ---
 
+## Retrieval limitations and production improvements
+
+During retrieval testing, short acronym-based queries such as `CATI` showed a limitation of pure vector search: semantically close methodologies like CAWI can rank near or even above the exact CATI match.
+
+This is expected because embeddings capture semantic similarity, but they do not guarantee exact keyword matching.
+
+For production, I would improve retrieval with:
+
+- hybrid search combining vector similarity and lexical/BM25 scoring;
+- exact-match boosting for acronyms, methodology names and project IDs;
+- metadata-aware filtering/reranking;
+- evaluation queries for known business-critical terms;
+- reranking with a cross-encoder or LLM-based reranker for final top-k precision.
+
+In this case study I kept retrieval intentionally simple to make the pipeline transparent and reproducible, while documenting the next production step.
+
 ## Production considerations
 
 For a production deployment I would additionally introduce:

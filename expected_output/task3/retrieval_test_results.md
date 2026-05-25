@@ -1,14 +1,14 @@
 # Retrieval Test Results
 
-- Embedding model: `fallback-64d`
-- Retrieval mode: `lexical fallback for offline test`
+- Embedding model: `text-embedding-3-small`
+- Retrieval mode: `cosine similarity over OpenAI embeddings`
 - Top K: 2
 
 ## Query: CAWI sondaggi online questionari
 
 ### Result 1
 
-- Score: `1.0000`
+- Score: `0.7084`
 - ID: `faq-a25763bc1db5c931`
 - Source: `faq`
 - Category: `metodologie di ricerca`
@@ -17,12 +17,12 @@
 
 ### Result 2
 
-- Score: `0.5000`
-- ID: `faq-323896f43062a59f`
+- Score: `0.5900`
+- ID: `faq-e0fce0074a38c736`
 - Source: `faq`
-- Category: `panel e campionamento`
+- Category: `internazionale`
 - Workspace: `None`
-- Preview: Che differenza c'è tra ricerca qualitativa e quantitativa?. La ricerca quantitativa raccoglie dati numerici da campioni ampi (es. sondaggi CAWI con 1000+ rispondenti) per analisi statistiche e generalizzazioni. La ricerca qualitativa esplor...
+- Preview: Come gestite le differenze culturali?. Ogni mercato ha un Local Project Manager che revisiona questionario e materiali per appropriatezza culturale. Esempi: scale di risposta (in alcuni paesi si evita punto medio), sensibilità su topic (red...
 
 ## Query: Technical Support accesso link errore sondaggio
 
@@ -30,7 +30,7 @@ Workspace filter: `WS-001`
 
 ### Result 1
 
-- Score: `0.8333`
+- Score: `0.7268`
 - ID: `interaction-WS-001-INT-20240115-001`
 - Source: `interactions`
 - Category: `support`
@@ -39,7 +39,7 @@ Workspace filter: `WS-001`
 
 ### Result 2
 
-- Score: `0.6667`
+- Score: `0.5842`
 - ID: `interaction-WS-001-INT-20240315-017`
 - Source: `interactions`
 - Category: `support`
@@ -50,18 +50,18 @@ Workspace filter: `WS-001`
 
 ### Result 1
 
-- Score: `1.0000`
-- ID: `project-WS-001-PRJ-012`
+- Score: `0.4651`
+- ID: `project-WS-003-PRJ-021`
 - Source: `projects`
 - Category: `project`
-- Workspace: `WS-001`
-- Preview: Project PRJ-012. Name: Political Opinion Tracker. Client: DemocracyPulse. Methodology: CATI. Status: Completed. Budget EUR: 55000.0. Start date: 2024-04-10T00:00:00Z. End date: 2024-04-20T00:00:00Z. Project manager: P. Fantozzi....
+- Workspace: `WS-003`
+- Preview: Project PRJ-021. Name: Pet Owner Behavior Analysis. Client: PetCare Products Inc. Methodology: CAWI. Status: Completed. Budget EUR: 21000.0. Start date: 2024-02-28T00:00:00Z. End date: 2024-05-04T00:00:00Z. Project manager: Pina Fantozzi....
 
 ### Result 2
 
-- Score: `1.0000`
-- ID: `project-WS-001-PRJ-037`
+- Score: `0.4568`
+- ID: `project-WS-003-PRJ-032`
 - Source: `projects`
 - Category: `project`
-- Workspace: `WS-001`
-- Preview: Project PRJ-037. Name: Public Transport Satisfaction. Client: MetroCity Authority. Methodology: CATI. Status: Completed. Budget EUR: 20000.0. Start date: 2024-02-05T00:00:00Z. End date: 2024-03-15T00:00:00Z. Project manager: Mario Fantozzi....
+- Workspace: `WS-003`
+- Preview: Project PRJ-032. Name: Cosmetics Brand Awareness. Client: BeautyLab International. Methodology: CATI. Status: Completed. Budget EUR: 23000.0. Start date: 2024-01-06T00:00:00Z. End date: 2024-04-20T00:00:00Z. Project manager: Silvana Filini....

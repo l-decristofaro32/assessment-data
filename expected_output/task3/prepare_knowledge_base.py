@@ -10,8 +10,11 @@ import os
 import re
 from pathlib import Path
 from typing import Any
+from dotenv import load_dotenv
 
 import pandas as pd
+
+load_dotenv()
 
 try:
     from openai import OpenAI
