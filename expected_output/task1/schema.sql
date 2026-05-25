@@ -93,33 +93,6 @@ CREATE TABLE faq_documents (
     source_updated_at   TIMESTAMPTZ
 );
 
-CREATE TABLE interactions (
-    interaction_id      TEXT PRIMARY KEY,
-    workspace_id        TEXT NOT NULL REFERENCES workspaces(workspace_id),
-    panelist_id         TEXT,
-    project_id          TEXT,
-    agent_id            BIGINT REFERENCES support_agents(agent_id),
-    interaction_date    TIMESTAMPTZ,
-    channel             TEXT CHECK (channel IN ('Email','Chat','Phone')),
-    issue_type          TEXT,
-    issue_description   TEXT NOT NULL,
-    resolution          TEXT,
-    resolved            BOOLEAN,
-    resolution_time_hours NUMERIC(8,2) CHECK (resolution_time_hours >= 0),
-    satisfaction_score  INTEGER CHECK (satisfaction_score BETWEEN 1 AND 5),
-    FOREIGN KEY (workspace_id, panelist_id) REFERENCES panelists(workspace_id, panelist_id),
-    FOREIGN KEY (workspace_id, project_id) REFERENCES projects(workspace_id, project_id)
-);
-
-CREATE TABLE faq_documents (
-    faq_id              TEXT PRIMARY KEY,
-    section             TEXT,
-    question            TEXT NOT NULL,
-    answer              TEXT NOT NULL,
-    language_code       TEXT DEFAULT 'it',
-    source_updated_at   TIMESTAMPTZ
-);
-
 CREATE TABLE ingestion_runs (
     ingestion_run_id    UUID PRIMARY KEY,
     source_name         TEXT NOT NULL,
