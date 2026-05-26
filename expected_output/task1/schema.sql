@@ -109,5 +109,3 @@ CREATE INDEX idx_projects_workspace_status ON projects(workspace_id, status);
 CREATE INDEX idx_projects_workspace_topic ON projects(workspace_id, research_topic);
 CREATE INDEX idx_interactions_workspace_project ON interactions(workspace_id, project_id);
 CREATE INDEX idx_interactions_issue_date ON interactions(workspace_id, issue_type, interaction_date DESC);
-CREATE INDEX idx_chunks_workspace_source ON document_chunks(workspace_id, source_type, created_at DESC);
-CREATE INDEX idx_chunks_metadata_gin ON document_chunks USING GIN(metadata);
